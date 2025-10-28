@@ -1,13 +1,58 @@
 """
 COMP 163 - Project 1: Character Creator & Saving/Loading
-Name: [Your Name Here]
-Date: [Date]
+Name: Jaylen Chavers
+Date: 10/28/2025
 
 AI Usage: [Document any AI assistance used]
 Example: AI helped with file I/O error handling logic in save_character function
 """
 
 def create_character(name, character_class):
+    character = {"name": name, "character_class": character_class}
+
+    if character_class == "Wizard":
+        character["character_class"] = "Wizard"
+        character["level"] = 1
+        character["strength"] = 5
+        character["dexterity"] = 15
+        character["magic"] = 20
+        character["faith"] = 2
+        character["health"] = 5
+    elif character_class == "Flying Swordsman":
+        character["character_class"] = "Flying Swordsman"
+        character["level"] = 1
+        character["strength"] = 15
+        character["dexterity"] = 5
+        character["magic"] = 5
+        character["faith"] = 10
+        character["health"] = 20
+    elif character_class == "Viking":
+        character["character_class"] = "Viking"
+        character["level"] = 1
+        character["strength"] = 10
+        character["dexterity"] = 5
+        character["magic"] = 10
+        character["faith"] = 5
+        character["health"] = 25
+    elif character_class == "Cleric":
+        character["character_class"] = "Cleric"
+        character["level"] = 1
+        character["strength"] = 5
+        character["dexterity"] = 5
+        character["magic"] = 15
+        character["faith"] = 15
+        character["health"] = 2
+    elif character_class == "Depraved":
+        character["character_class"] = "Depraved"
+        character["level"] = 1
+        character["strength"] = 15
+        character["dexterity"] = 15
+        character["magic"] = 5
+        character["faith"] = 1
+        character["health"] = 5
+
+        return character
+
     """
     Creates a new character dictionary with calculated stats
     Returns: dictionary with keys: name, class, level, strength, magic, health, gold
@@ -94,7 +139,7 @@ def level_up(character):
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
-    
+    print(create_character("Mael", "Depraved"))
     # Example usage:
     # char = create_character("TestHero", "Warrior")
     # display_character(char)
