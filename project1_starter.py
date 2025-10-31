@@ -86,19 +86,12 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    save_data = f"""
-    Character Name: [{character["name"]}]
-    Class: [{character["character_class"]}]
-    Level: [{character["level"]}]
-    Strength: [{character["strength"]}]
-    Dexterity: [{character["dexterity"]}]
-    Magic: [{character["magic"]}]
-    Faith: [{character["faith"]}]
-    Health: [{character["health"]}]
-    """
+    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["character_class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]"
+
 
     with open(filename, "w") as save_file:
-        save_file.writelines(save_data)
+        save_file.writelines(save_data.strip())
+        print(save_data.strip())
         return True
 
 
@@ -116,7 +109,7 @@ def load_character(filename):
     """
     character = {}
     with open(filename, "r") as save_file:
-        #initialize empty variables to store values retreived from save file
+        #initialize empty variables to store values retrieved from save file
         extractedVals = []
         name = ""
         character_class = ""
