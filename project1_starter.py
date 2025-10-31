@@ -14,7 +14,7 @@ from collections import namedtuple
 def create_character(name, character_class):
     character = {"name": name, "character_class": character_class}
 
-    classStats = calculate_stats(character_class, 5)
+    classStats = calculate_stats(character_class, 1)
     character = {"name": name, "character_class": character_class,
                  "level": classStats[0], "strength": classStats[1],
                  "dexterity": classStats[2], "magic": classStats[3],
@@ -48,13 +48,13 @@ def calculate_stats(character_class, level):
     levelScaling = (level * 3) // 2 #each level up increases starting stats exponentially as additional level ups occur.
     classStats = namedtuple("ClassStats", ["level", "strength", "dexterity", "magic", "faith", "health"])
     #base stats scale by 1 point with each level up.
-    if character_class == "Wizard":
+    if character_class == "Mage":
         class_stats = classStats(level, 5 + levelScaling, 15 + levelScaling, 20 + levelScaling, 2 + levelScaling, 5 + levelScaling)
 
-    elif character_class == "Flying Swordsman":
+    elif character_class == "Warrior":
         class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 4 + levelScaling, 4 + levelScaling, 20 + levelScaling)
 
-    elif character_class == "Viking":
+    elif character_class == "Rogue":
         class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling)
 
     elif character_class == "Cleric":
@@ -63,7 +63,7 @@ def calculate_stats(character_class, level):
     elif character_class == "Depraved":
         class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling)
     else:
-        character_class = "Depraved"
+        character_class = "Rogue"
         class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 5 + levelScaling, 1 + levelScaling, 5 + levelScaling)
 
     return class_stats
@@ -188,6 +188,9 @@ if __name__ == "__main__":
     save_character(char, "my_character.txt")
     loaded = load_character("my_character.txt")
     print(loaded)
+    level_up(char)
+    print("=== CHARACTER LEVEL UP ===")
+    print(display_character(char))
     # Example usage:
     # char = create_character("TestHero", "Warrior")
     # display_character(char)
