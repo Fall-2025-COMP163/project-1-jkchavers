@@ -115,9 +115,7 @@ def load_character(filename):
         with open(filename, "r") as save_file:
             #initialize empty variables to store values retrieved from save file
             extractedVals = []
-            name = ""
-            character_class = ""
-            classStats = ()
+            
             for line in save_file:
                 if(line.strip() != ""): #used strip method to fix reading blank lines from save data
                     startIndex = line.find("[")
