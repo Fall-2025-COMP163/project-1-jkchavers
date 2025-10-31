@@ -14,7 +14,7 @@ from collections import namedtuple
 def create_character(name, character_class):
     character = {"name": name, "character_class": character_class}
 
-    classStats = calculate_stats(character_class, 1)
+    classStats = calculate_stats(character_class, 5)
     character = {"name": name, "character_class": character_class,
                  "level": classStats[0], "strength": classStats[1],
                  "dexterity": classStats[2], "magic": classStats[3],
@@ -45,25 +45,26 @@ def calculate_stats(character_class, level):
     - Rogues: Medium strength, medium magic, low health
     - Clerics: Medium strength, high magic, high health
     """
+    levelScaling = (level * 3) // 2 #each level up increases starting stats exponentially as additional level ups occur.
     classStats = namedtuple("ClassStats", ["level", "strength", "dexterity", "magic", "faith", "health"])
-
+    #base stats scale by 1 point with each level up.
     if character_class == "Wizard":
-        class_stats= classStats(1, 5, 15, 20, 2, 5)
+        class_stats = classStats(level, 5 + levelScaling, 15 + levelScaling, 20 + levelScaling, 2 + levelScaling, 5 + levelScaling)
 
     elif character_class == "Flying Swordsman":
-        class_stats = classStats(1, 15, 15, 20, 10, 20)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 4 + levelScaling, 4 + levelScaling, 20 + levelScaling)
 
     elif character_class == "Viking":
-        class_stats = classStats(1, 5, 10, 10, 5, 25)
+        class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling)
 
     elif character_class == "Cleric":
-        class_stats = classStats(1, 5, 5, 15, 15, 2)
+        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + llevelScaling)
 
     elif character_class == "Depraved":
-        class_stats = classStats(1, 15, 15, 5, 1, 5)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling)
     else:
         character_class = "Depraved"
-        class_stats = classStats(1, 15, 15, 5, 1, 5)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 5 + levelScaling, 1 + levelScaling, 5 + levelScaling)
 
     return class_stats
     # TODO: Implement this function
@@ -121,9 +122,10 @@ def load_character(filename):
         character_class = ""
         classStats = ()
         for line in save_file:
-            startIndex = line.find("[")
-            endingIndex = line.find("]")
-            extractedVals.append(line[startIndex + 1:endingIndex])
+            if(line.strip() != ""): #used strip method to fix reading blank lines from save data
+                startIndex = line.find("[")
+                endingIndex = line.find("]")
+                extractedVals.append(line[startIndex + 1:endingIndex])
 
         character = {"name": extractedVals[0], "character_class": extractedVals[1],
                      "level": extractedVals[2], "strength": extractedVals[3],
@@ -169,7 +171,10 @@ def level_up(character):
     Increases character level and recalculates stats
     Modifies the character dictionary directly
     Returns: None
+
     """
+    character["level"] += 1
+
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
     pass
@@ -178,7 +183,7 @@ def level_up(character):
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
-    char = create_character("Mai", "Mage")
+    char = create_character("Mai", "Flying Swordsman")
     display_character(char)
     save_character(char, "my_character.txt")
     loaded = load_character("my_character.txt")
