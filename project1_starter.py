@@ -12,10 +12,10 @@ from collections import namedtuple
 import os
 
 def create_character(name, character_class):
-    character = {"name": name, "character_class": character_class}
+    character = {"name": name, "class": character_class}
 
     classStats = calculate_stats(character_class, 1)
-    character = {"name": name, "character_class": character_class,
+    character = {"name": name, "class": character_class,
                  "level": classStats[0], "strength": classStats[1],
                  "dexterity": classStats[2], "magic": classStats[3],
                  "faith": classStats[4], "health": classStats[5]}
@@ -86,7 +86,7 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["character_class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]"
+    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]"
 
     if os.path.exists(filename) == True:
         with open(filename, "w") as save_file:
@@ -124,7 +124,7 @@ def load_character(filename):
                     endingIndex = line.find("]")
                     extractedVals.append(line[startIndex + 1:endingIndex])
 
-            character = {"name": extractedVals[0], "character_class": extractedVals[1],
+            character = {"name": extractedVals[0], "class": extractedVals[1],
                          "level": extractedVals[2], "strength": extractedVals[3],
                          "dexterity": extractedVals[4], "magic": extractedVals[5],
                          "faith": extractedVals[6], "health": extractedVals[7]}
@@ -155,7 +155,7 @@ def display_character(character):
     """
     print("=== CHARACTER SHEET ===")
     print("Name:",character["name"])
-    print("Class:",character["character_class"])
+    print("Class:",character["class"])
     print("Level:",character["level"])
     print("Strength:",character["strength"])
     print("Dexterity:",character["dexterity"])
