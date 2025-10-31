@@ -9,7 +9,7 @@ AI Usage: [Document any AI assistance used]
 Example: AI helped with file I/O error handling logic in save_character function
 """
 from collections import namedtuple
-
+import os
 
 def create_character(name, character_class):
     character = {"name": name, "character_class": character_class}
@@ -88,11 +88,14 @@ def save_character(character, filename):
     """
     save_data = f"Character Name: [{character["name"]}]\nClass: [{character["character_class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]"
 
+    if os.path.exists(filename) == True:
+        with open(filename, "w") as save_file:
+            save_file.writelines(save_data.strip())
+            print(save_data.strip())
 
-    with open(filename, "w") as save_file:
-        save_file.writelines(save_data.strip())
-        print(save_data.strip())
         return True
+    elif os.path.exists(filename) == False:
+        return  False
 
 
 
@@ -108,24 +111,27 @@ def load_character(filename):
     Returns: character dictionary if successful, None if file not found
     """
     character = {}
-    with open(filename, "r") as save_file:
-        #initialize empty variables to store values retrieved from save file
-        extractedVals = []
-        name = ""
-        character_class = ""
-        classStats = ()
-        for line in save_file:
-            if(line.strip() != ""): #used strip method to fix reading blank lines from save data
-                startIndex = line.find("[")
-                endingIndex = line.find("]")
-                extractedVals.append(line[startIndex + 1:endingIndex])
+    if (os.path.exists(filename) == True):
+        with open(filename, "r") as save_file:
+            #initialize empty variables to store values retrieved from save file
+            extractedVals = []
+            name = ""
+            character_class = ""
+            classStats = ()
+            for line in save_file:
+                if(line.strip() != ""): #used strip method to fix reading blank lines from save data
+                    startIndex = line.find("[")
+                    endingIndex = line.find("]")
+                    extractedVals.append(line[startIndex + 1:endingIndex])
 
-        character = {"name": extractedVals[0], "character_class": extractedVals[1],
-                     "level": extractedVals[2], "strength": extractedVals[3],
-                     "dexterity": extractedVals[4], "magic": extractedVals[5],
-                     "faith": extractedVals[6], "health": extractedVals[7]}
+            character = {"name": extractedVals[0], "character_class": extractedVals[1],
+                         "level": extractedVals[2], "strength": extractedVals[3],
+                         "dexterity": extractedVals[4], "magic": extractedVals[5],
+                         "faith": extractedVals[6], "health": extractedVals[7]}
 
-        return character
+            return character
+    elif os.path.exists(filename) == False:
+        return None
 
 
     # TODO: Implement this function
