@@ -18,7 +18,8 @@ def create_character(name, character_class):
     character = {"name": name, "class": character_class,
                  "level": classStats[0], "strength": classStats[1],
                  "dexterity": classStats[2], "magic": classStats[3],
-                 "faith": classStats[4], "health": classStats[5]}
+                 "faith": classStats[4], "health": classStats[5],
+                 "gold": classStats[6],}
 
     return character
 
@@ -46,25 +47,25 @@ def calculate_stats(character_class, level):
     - Clerics: Medium strength, high magic, high health
     """
     levelScaling = (level * 3) // 2 #each level up increases starting stats exponentially as additional level ups occur.
-    classStats = namedtuple("ClassStats", ["level", "strength", "dexterity", "magic", "faith", "health"])
+    classStats = namedtuple("ClassStats", ["level", "strength", "dexterity", "magic", "faith", "health", "gold"])
     #base stats scale by 1 point with each level up.
     if character_class == "Mage":
-        class_stats = classStats(level, 5 + levelScaling, 15 + levelScaling, 20 + levelScaling, 2 + levelScaling, 5 + levelScaling)
+        class_stats = classStats(level, 5 + levelScaling, 15 + levelScaling, 20 + levelScaling, 2 + levelScaling, 5 + levelScaling, 100 * levelScaling)
 
     elif character_class == "Warrior":
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 4 + levelScaling, 4 + levelScaling, 20 + levelScaling)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 4 + levelScaling, 4 + levelScaling, 20 + levelScaling, 100 * levelScaling)
 
     elif character_class == "Rogue":
-        class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling)
+        class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling, 100 * levelScaling)
 
     elif character_class == "Cleric":
-        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling)
+        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 100 * levelScaling)
 
     elif character_class == "Depraved":
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling, 100 * levelScaling)
     else:
         character_class = "Rogue"
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 5 + levelScaling, 1 + levelScaling, 5 + levelScaling)
+        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 5 + levelScaling, 1 + levelScaling, 5 + levelScaling, 100 * levelScaling)
 
     return class_stats
     # TODO: Implement this function
@@ -86,7 +87,7 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]"
+    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]\nGold: [{character["gold"]}]"
 
     if os.path.exists(filename) == True:
         with open(filename, "w") as save_file:
@@ -115,7 +116,7 @@ def load_character(filename):
         with open(filename, "r") as save_file:
             #initialize empty variables to store values retrieved from save file
             extractedVals = []
-            
+
             for line in save_file:
                 if(line.strip() != ""): #used strip method to fix reading blank lines from save data
                     startIndex = line.find("[")
@@ -134,7 +135,7 @@ def load_character(filename):
 
     # TODO: Implement this function
     # Remember to handle file not found errors
-    pass
+
 
 def display_character(character):
     """
@@ -160,6 +161,7 @@ def display_character(character):
     print("Magic:",character["magic"])
     print("Faith:",character["faith"])
     print("Health:",character["health"])
+    print("Gold:",character["gold"])
     # TODO: Implement this function
     pass
 
@@ -171,7 +173,7 @@ def level_up(character):
 
     """
     character["level"] += 1
-
+    calculate_stats(character, character["level"])
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
     pass
