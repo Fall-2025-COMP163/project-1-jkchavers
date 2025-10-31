@@ -58,7 +58,7 @@ def calculate_stats(character_class, level):
         class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling)
 
     elif character_class == "Cleric":
-        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + llevelScaling)
+        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling)
 
     elif character_class == "Depraved":
         class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling)
