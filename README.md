@@ -106,3 +106,5 @@ Interview (30%): Code explanation and live coding challenge
  # 🤕 Major Challenges
  - The comprehensive test case had an edge case that required specifying a specific encoding for special unicode characters. This mainly affected the character name that could have accent marks from foreign languages.
  - The Character Creation test case limited the tuple/namedtuple size to 3. This was extremely inconvenient for customization and required boilerplating the concept to fit a strict test case.
+ # How to run
+ - Execute the project1_starter.py file2
