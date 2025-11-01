@@ -16,10 +16,10 @@ def create_character(name, character_class):
 
     classStats = calculate_stats(character_class, 1)
     character = {"name": name, "class": character_class,
-                 "level": classStats[0], "strength": classStats[1],
-                 "dexterity": classStats[2], "magic": classStats[3],
-                 "faith": classStats[4], "health": classStats[5],
-                 "gold": classStats[6],}
+                 "level": 1, "strength": classStats[0],
+                 "magic": classStats[1],
+                 "health": classStats[2],
+                 "gold": 100,}
 
     return character
 
@@ -36,6 +36,7 @@ def create_character(name, character_class):
     pass
 
 def calculate_stats(character_class, level):
+
     """
     Calculates base stats based on class and level
     Returns: tuple of (strength, magic, health)
@@ -47,25 +48,25 @@ def calculate_stats(character_class, level):
     - Clerics: Medium strength, high magic, high health
     """
     levelScaling = (level * 3) // 2 #each level up increases starting stats exponentially as additional level ups occur.
-    classStats = namedtuple("ClassStats", ["level", "strength", "dexterity", "magic", "faith", "health", "gold"])
+    classStats = namedtuple("ClassStats", ["strength", "magic", "health"])
     #base stats scale by 1 point with each level up.
     if character_class == "Mage":
-        class_stats = classStats(level, 5 + levelScaling, 15 + levelScaling, 20 + levelScaling, 2 + levelScaling, 5 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(5 + levelScaling, 15 + levelScaling, 3 + levelScaling)
 
     elif character_class == "Warrior":
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 4 + levelScaling, 4 + levelScaling, 20 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(20 + levelScaling, 5 + levelScaling, 20 + levelScaling)
 
     elif character_class == "Rogue":
-        class_stats = classStats(level, 5 + levelScaling, 10 + levelScaling, 10 + levelScaling, 5 + levelScaling, 25 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(10 + levelScaling, 15 + levelScaling, 8 + levelScaling)
 
     elif character_class == "Cleric":
-        class_stats = classStats(level, 5 + levelScaling, 5 + levelScaling, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(8 + levelScaling, 20 + levelScaling, 20 + levelScaling)
 
     elif character_class == "Depraved":
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 2 + levelScaling, 1 + levelScaling, 5 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(5 + levelScaling, 5 + levelScaling, 20 + levelScaling)
     else:
         character_class = "Rogue"
-        class_stats = classStats(level, 15 + levelScaling, 15 + levelScaling, 5 + levelScaling, 1 + levelScaling, 5 + levelScaling, 100 * levelScaling)
+        class_stats = classStats(20 + levelScaling, 5 + levelScaling, 20 + levelScaling)
 
     return class_stats
     # TODO: Implement this function
@@ -87,7 +88,7 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nDexterity: [{character["dexterity"]}]\nMagic: [{character["magic"]}]\nFaith: [{character["faith"]}]\nHealth: [{character["health"]}]\nGold: [{character["gold"]}]"
+    save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nMagic: [{character["magic"]}]\nHealth: [{character["health"]}]\nGold: [{character["gold"]}]"
 
     if os.path.exists(filename) == True:
         with open(filename, "w") as save_file:
@@ -125,8 +126,7 @@ def load_character(filename):
 
             character = {"name": extractedVals[0], "class": extractedVals[1],
                          "level": extractedVals[2], "strength": extractedVals[3],
-                         "dexterity": extractedVals[4], "magic": extractedVals[5],
-                         "faith": extractedVals[6], "health": extractedVals[7]}
+                         "magic": extractedVals[4], "health": extractedVals[5]}
 
             return character
     elif os.path.exists(filename) == False:
@@ -157,9 +157,7 @@ def display_character(character):
     print("Class:",character["class"])
     print("Level:",character["level"])
     print("Strength:",character["strength"])
-    print("Dexterity:",character["dexterity"])
     print("Magic:",character["magic"])
-    print("Faith:",character["faith"])
     print("Health:",character["health"])
     print("Gold:",character["gold"])
     # TODO: Implement this function
