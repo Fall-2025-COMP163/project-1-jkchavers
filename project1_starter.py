@@ -129,9 +129,9 @@ def load_character(filename):
                     extractedVals.append(line[startIndex + 1:endingIndex])
 
             character = {"name": extractedVals[0], "class": extractedVals[1],
-                         "level": extractedVals[2], "strength": extractedVals[3],
+                         "level": int(extractedVals[2]), "strength": extractedVals[3],
                          "magic": extractedVals[4], "health": extractedVals[5]}
-
+            print(character)
             return character
     elif os.path.isfile(filename) == False:
         return None
@@ -190,8 +190,8 @@ if __name__ == "__main__":
     loaded = load_character("my_character.txt")
     print(loaded)
     level_up(char)
-    print("=== CHARACTER LEVEL UP ===")
-    print(display_character(char))
+    #print("=== CHARACTER LEVEL UP ===")
+    #print(display_character(char))
     # Example usage:
     # char = create_character("TestHero", "Warrior")
     # display_character(char)
