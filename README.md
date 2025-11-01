@@ -97,3 +97,12 @@ Modifying protected files will result in automatic academic integrity violation
 Implementation (70%): Function correctness, file operations, error handling
 
 Interview (30%): Code explanation and live coding challenge
+
+ # 📺Character Creation
+#### The program is the first step to a game prototype. Particularly the program emphasizes character creation and stat modifiers based on simulated progression.
+
+ # 🤖AI Usage
+ - The error codes returned from the test script were pasted into ChatGPT to understand more deeply the root cause of failed edge cases.
+ # 🤕 Major Challenges
+ - The comprehensive test case had an edge case that required specifying a specific encoding for special unicode characters. This mainly affected the character name that could have accent marks from foreign languages.
+ - The Character Creation test case limited the tuple/namedtuple size to 3. This was extremely inconvenient for customization and required boilerplating the concept to fit a strict test case.

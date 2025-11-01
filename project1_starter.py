@@ -68,6 +68,7 @@ def calculate_stats(character_class, level):
         character_class = "Rogue"
         class_stats = classStats(20 + levelScaling, 5 + levelScaling, 20 + levelScaling)
 
+
     return class_stats
     # TODO: Implement this function
     # Return a tuple: (strength, magic, health)
@@ -90,17 +91,17 @@ def save_character(character, filename):
     """
     save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nMagic: [{character["magic"]}]\nHealth: [{character["health"]}]\nGold: [{character["gold"]}]"
 
-    # Check if directory part of filename exists
-    directory = os.path.exists(filename)
-    if directory != "" and not os.path.exists(directory):
-        # Directory does not exist
+    directory = os.path.dirname(filename)  # get the directory part of the path
+    if directory and not os.path.exists(directory):
         return False
-    else:
-        with open(filename, "w") as save_file:
-            save_file.writelines(save_data.strip())
-            print(save_data.strip())
 
-            return True
+    # Directory does not exist
+    with open(filename, "w", encoding="utf-8") as save_file:
+        save_file.writelines(save_data.strip())
+        print(save_data.strip())
+
+        return True
+
 
 
 
@@ -119,9 +120,11 @@ def load_character(filename):
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
-    character = {}
-    if os.path.isfile(filename) == True:
-        with open(filename, "r") as save_file:
+
+    if not os.path.isfile(filename):
+        return None
+    else:
+        with open(filename, "r", encoding="utf-8") as save_file:
             #initialize empty variables to store values retrieved from save file
             extractedVals = []
 
@@ -132,12 +135,12 @@ def load_character(filename):
                     extractedVals.append(line[startIndex + 1:endingIndex])
 
             character = {"name": extractedVals[0], "class": extractedVals[1],
-                         "level": int(extractedVals[2]), "strength": extractedVals[3],
-                         "magic": extractedVals[4], "health": extractedVals[5]}
+                         "level": int(extractedVals[2]), "strength": int(extractedVals[3]),
+                         "magic": int(extractedVals[4]), "health": int(extractedVals[5]),
+                         "gold" : int(extractedVals[6])}
             print(character)
             return character
-    elif os.path.isfile(filename) == False:
-        return None
+
 
 
     # TODO: Implement this function
