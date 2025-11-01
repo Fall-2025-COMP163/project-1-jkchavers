@@ -94,8 +94,9 @@ def save_character(character, filename):
         with open(filename, "w") as save_file:
             save_file.writelines(save_data.strip())
             print(save_data.strip())
+            return True
 
-        return True
+
     elif os.path.exists(filename) == False:
         return  False
 
