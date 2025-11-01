@@ -113,7 +113,7 @@ def load_character(filename):
     Returns: character dictionary if successful, None if file not found
     """
     character = {}
-    if (os.path.exists(filename) == True):
+    if os.path.isfile(filename) == True:
         with open(filename, "r") as save_file:
             #initialize empty variables to store values retrieved from save file
             extractedVals = []
@@ -129,7 +129,7 @@ def load_character(filename):
                          "magic": extractedVals[4], "health": extractedVals[5]}
 
             return character
-    elif os.path.exists(filename) == False:
+    elif os.path.isfile(filename) == False:
         return None
 
 
