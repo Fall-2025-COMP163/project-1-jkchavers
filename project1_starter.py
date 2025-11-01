@@ -90,15 +90,18 @@ def save_character(character, filename):
     """
     save_data = f"Character Name: [{character["name"]}]\nClass: [{character["class"]}]\nLevel: [{character["level"]}]\nStrength: [{character["strength"]}]\nMagic: [{character["magic"]}]\nHealth: [{character["health"]}]\nGold: [{character["gold"]}]"
 
+    # Check if directory part of filename exists
+    directory = os.path.exists(filename)
+    if directory != "" and not os.path.exists(directory):
+        # Directory does not exist
+        return False
+    else:
+        with open(filename, "w") as save_file:
+            save_file.writelines(save_data.strip())
+            print(save_data.strip())
 
-    with open(filename, "w") as save_file:
-        save_file.writelines(save_data.strip())
-        print(save_data.strip())
-
-        if os.path.exists(filename) == True:
             return True
-        elif os.path.exists(filename) == False:
-            return False
+
 
 
 
